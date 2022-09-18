@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const Vehicle = z.object({
+export const Vehicle = z.object({
   model: z.string({
     required_error: 'Model is required',
     invalid_type_error: 'Model must be a string',
@@ -8,8 +8,8 @@ const Vehicle = z.object({
   year: z.number({
     required_error: 'Year is required',
     invalid_type_error: 'Year must be a number',
-  }).gte(1900, { message: 'this👏is👏too👏small' })
-    .lte(2022, { message: 'this👏is👏too👏bid' }).int({ message: 'You know this isnt right' }),
+  }).gte(1900, { message: 'this is too small' })
+    .lte(2022, { message: 'this is too bid' }).int({ message: 'You know this isnt right' }),
   color: z.string({
     required_error: 'Color is required',
     invalid_type_error: 'Color must be a string',
