@@ -8,25 +8,30 @@ abstract class MongoModel<T> implements IModel<T> {
     this._model = model;
   }
   public async create(obj:T):Promise<T> {
-    return this._model.create({ ...obj });
+    const result = await this._model.create({ ...obj });
+    return result;
   }
 
   public async read():Promise<T[]> {
-    return this._model.find({ });
+    const result = await this._model.find({ });
+    return result;
   }
 
   public async readOne(_id:string):Promise<T | null> {
     if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);
-    return this._model.findOne({ _id });
+    const result = await this._model.findOne({ _id }).select('-__v');
+    return result;
   }
 
-  public async update(id:string, obj:T):Promise<T | null> {
+  public async update(id:string, obj: object):Promise<T | null> {
     if (!isValidObjectId(id)) throw Error(ErrorTypes.InvalidMongoId);
-    return this._model.findOneAndUpdate({ id }, { obj });
+    const result = await this._model.findByIdAndUpdate(id, obj).select('-__v');
+    return result;
   }
   public async delete(_id:string):Promise<T | null> {
     if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);
-    return this._model.findByIdAndDelete({ _id });
+    const result = await this._model.findByIdAndDelete({ _id });
+    return result;
   }
 }
 

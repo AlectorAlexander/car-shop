@@ -20,7 +20,8 @@ class CarService implements IService<ICar> {
     if (!parsed.success) {
       throw parsed.error;
     }
-    return this._Car.create(parsed.data);
+    const result = await this._Car.create(parsed.data);
+    return result;
   }
 
   public async read():Promise<ICar[]> {
@@ -37,6 +38,10 @@ class CarService implements IService<ICar> {
 
   public async update(id:string, obj:ICar):Promise<ICar> {
     const Car = await this._Car.update(id, obj);
+    const parsed = CarZodSchema.safeParse(obj);
+    if (!parsed.success) {
+      throw parsed.error;
+    }
     if (!Car) throw new Error(ErrorTypes.EntityNotFound);
     return Car;
   }
