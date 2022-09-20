@@ -19,13 +19,13 @@ abstract class MongoModel<T> implements IModel<T> {
 
   public async readOne(_id:string):Promise<T | null> {
     if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);
-    const result = await this._model.findOne({ _id }).select('-__v');
+    const result = await this._model.findOne({ _id });
     return result;
   }
 
   public async update(id:string, obj: object):Promise<T | null> {
     if (!isValidObjectId(id)) throw Error(ErrorTypes.InvalidMongoId);
-    const result = await this._model.findByIdAndUpdate(id, obj).select('-__v');
+    const result = await this._model.findByIdAndUpdate(id, obj);
     return result;
   }
   public async delete(_id:string):Promise<T | null> {
