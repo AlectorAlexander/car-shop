@@ -36,7 +36,7 @@ class CarService implements IService<ICar> {
     return Car;
   }
 
-  public async update(id:string, obj:ICar):Promise<ICar> {
+  public async update(id:string, obj: ICar | object):Promise<ICar> {
     const Car = await this._Car.update(id, obj);
     const parsed = CarZodSchema.safeParse(obj);
     if (!parsed.success) {

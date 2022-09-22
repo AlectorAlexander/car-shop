@@ -36,7 +36,7 @@ class MotorcycleService implements IService<IMotorcycle> {
     return Motorcycle;
   }
 
-  public async update(id:string, obj:IMotorcycle):Promise<IMotorcycle> {
+  public async update(id:string, obj:IMotorcycle | object):Promise<IMotorcycle> {
     const parsed = MotorcycleZodSchema.safeParse(obj);
     if (!parsed.success) {
       throw parsed.error;
